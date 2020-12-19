@@ -57,6 +57,7 @@ public class Vector3f {
     /**
      * gets a specific value of this vector
      * @param c - which component to get
+     * @return - the value
      */
     public float get(int c) {
         switch (c) {
@@ -162,13 +163,13 @@ public class Vector3f {
     }
 
     /**
-     * normalizes a vector to a certain length val
+     * normalizes a vector to a specific length
      * @param v - the vector
-     * @param val - the length to be normalized to
+     * @param length - the length to be normalized to
      * @return - the new vector
      */
-    public static Vector3f normalize(Vector3f v, float val) {
-        return (Vector3f.divide(v, new Vector3f(length(v)))).scale(val);
+    public static Vector3f normalize(Vector3f v, float length) {
+        return (Vector3f.divide(v, new Vector3f(length(v)))).scale(length);
     }
 
     /**
@@ -269,7 +270,7 @@ public class Vector3f {
 
     /**
      * determines if two vectors are exactly identical
-     * @param o - the other vector
+     * @param o - the other object
      * @return - true if this and o are both vectors that are exactly equal
      */
     @Override
@@ -282,9 +283,9 @@ public class Vector3f {
 
     /**
      * determines if two vectors are nearly identical
-     * @param o - the other vector
+     * @param o - the other object
      * @param epsilon - the max error
-     * @return - true if this and o are both vectors and the absolute error for each components is less than epsilon
+     * @return - true if this and o are both vectors and the absolute error for each component is less than epsilon
      */
     public boolean equals(Object o, float epsilon) {
         if (this == o) return true;
