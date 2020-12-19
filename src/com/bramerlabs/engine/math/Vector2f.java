@@ -1,4 +1,4 @@
-package com.bramerlabs.engine;
+package com.bramerlabs.engine.math;
 
 import java.util.Objects;
 
