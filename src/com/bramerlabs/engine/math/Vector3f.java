@@ -30,6 +30,30 @@ public class Vector3f {
     }
 
     /**
+     * creates an identity vector in the e1 direction
+     * @return - the identity vector
+     */
+    public static Vector3f e1() {
+        return new Vector3f(1, 0, 0);
+    }
+
+    /**
+     * creates an identity vector in the e2 direction
+     * @return - the identity vector
+     */
+    public static Vector3f e2() {
+        return new Vector3f(0, 1, 0);
+    }
+
+    /**
+     * creates an identity vector in the e3 direction
+     * @return - the identity vector
+     */
+    public static Vector3f e3() {
+        return new Vector3f(0, 0, 1);
+    }
+
+    /**
      * sets the components of this vector
      * @param x - the new x component
      * @param y - the new y component
