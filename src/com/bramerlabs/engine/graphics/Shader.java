@@ -140,6 +140,15 @@ public class Shader {
     }
 
     /**
+     * sets the uniform to an int value
+     * @param name - the name of the uniform
+     * @param value - the value
+     */
+    public void setUniform(String name, int value) {
+        GL20.glUniform1i(getUniformLocation(name), value);
+    }
+
+    /**
      * sets the uniform to a boolean value (converts boolean to 1 or 0)
      * @param name - the name of the uniform
      * @param value - the value of the uniform
@@ -206,15 +215,6 @@ public class Shader {
 
         // delete the shader program
         GL20.glDeleteShader(programID);
-    }
-
-    /**
-     * sets the uniform to an int value
-     * @param name - the name of the uniform
-     * @param value - the value
-     */
-    public void setUniform(String name, int value) {
-        GL20.glUniform1i(getUniformLocation(name), value);
     }
 
     /**
