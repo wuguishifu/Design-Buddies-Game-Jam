@@ -52,6 +52,7 @@ public class Mesh {
         makeTextureBuffer();
         makeIndexBuffer();
 
+        material.create();
     }
 
     /**

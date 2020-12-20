@@ -184,7 +184,7 @@ public class Window {
             } else {
                 GLFW.glfwSetWindowMonitor( // set the window to not fullscreen
                         windowHandle,
-                        GLFW.glfwGetPrimaryMonitor(),
+                        0,
                         this.windowX,
                         this.windowY,
                         defaultWidth,

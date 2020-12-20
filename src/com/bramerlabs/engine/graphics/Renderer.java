@@ -26,12 +26,22 @@ public class Renderer {
     // the window to render to
     private Window window;
 
+    /**
+     * default constructor for specified window and shader
+     * @param window - the window to render to
+     * @param shader - the shader to use
+     */
     public Renderer(Window window, Shader shader) {
         this.shader = shader;
         this.window = window;
         numAttribs = shader.getNumAttribs();
     }
 
+    /**
+     * renders an object
+     * @param object - the object to be used
+     * @param camera - the view camera object
+     */
     public void renderMesh(GameObject object, Camera camera) {
         Mesh mesh = object.getMesh();
 
@@ -51,16 +61,26 @@ public class Renderer {
         glBindVertexArray(0);
     }
 
+    /**
+     * draws a mesh
+     * @param mesh - the mesh to be drawn
+     */
     private void draw(Mesh mesh) {
         glDrawElements(GL11.GL_TRIANGLES, mesh.getIndices().length, GL11.GL_UNSIGNED_INT, 0);
     }
 
+    /**
+     * enables the vertex attribute array for OpenGL
+     */
     private void enableVertexAttribArrays() {
         for (int i = 0; i < numAttribs; i++) {
             glEnableVertexAttribArray(i);
         }
     }
 
+    /**
+     * disables the vertex attribute array for OpenGL
+     */
     private void disableVertexAttribArrays() {
         for (int i = 0; i < numAttribs; i++) {
             glDisableVertexAttribArray(i);
