@@ -212,6 +212,14 @@ public class Matrix4f {
     }
 
     /**
+     * getter method
+     * @return - the elements of this matrix
+     */
+    public float[] getAll() {
+        return elements;
+    }
+
+    /**
      * determines if two matrices are exactly identical
      * @param o - the other object
      * @return - true if both objects are matrices that are exactly equal
