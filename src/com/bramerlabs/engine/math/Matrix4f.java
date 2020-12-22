@@ -97,22 +97,21 @@ public class Matrix4f {
      * @return - a matrix representing all of these operations
      */
     public static Matrix4f transform(Vector3f position, Vector3f rotation, Vector3f scale) {
-        // create the translation matrix
+
+        // create translation matrix
         Matrix4f translationMatrix = Matrix4f.translate(position);
 
-        // create the x, y, z components of the rotation matrix
+        // create components of rotation matrix
         Matrix4f rotXMatrix = Matrix4f.rotate(rotation.getX(), new Vector3f(1, 0, 0));
         Matrix4f rotYMatrix = Matrix4f.rotate(rotation.getY(), new Vector3f(0, 1, 0));
         Matrix4f rotZMatrix = Matrix4f.rotate(rotation.getZ(), new Vector3f(0, 0, 1));
-
-        // combine the x, y, z components of the rotation matrix
+        // combine rotation matrix components into full rotation matrix
         Matrix4f rotationMatrix = Matrix4f.multiply(rotXMatrix, Matrix4f.multiply(rotYMatrix, rotZMatrix));
 
-        // create the scale matrix
+        // create scale matrix
         Matrix4f scaleMatrix = Matrix4f.scale(scale);
 
-        // combine the transformation matrices into one matrix
-
+        // combine all matrices into one transformation matrix
         return Matrix4f.multiply(translationMatrix, Matrix4f.multiply(rotationMatrix, scaleMatrix));
     }
 
@@ -147,20 +146,17 @@ public class Matrix4f {
      * @return - the view matrix
      */
     public static Matrix4f view(Vector3f position, Vector3f rotation) {
-        // create inverse position vector
+        // create negative position vector and make translation matrix of it
         Vector3f negative = new Vector3f(-position.getX(), -position.getY(), -position.getZ());
-
-        // create a translation matrix from the position vector
         Matrix4f translationMatrix = Matrix4f.translate(negative);
 
-        // create a rotation matrix
+        // create full rotation matrix
         Matrix4f rotXMatrix = Matrix4f.rotate(rotation.getX(), new Vector3f(1, 0, 0));
         Matrix4f rotYMatrix = Matrix4f.rotate(rotation.getY(), new Vector3f(0, 1, 0));
         Matrix4f rotZMatrix = Matrix4f.rotate(rotation.getZ(), new Vector3f(0, 0, 1));
-
-        // combine the components of the matrix into a single rotation matrix
         Matrix4f rotationMatrix = Matrix4f.multiply(rotZMatrix, Matrix4f.multiply(rotYMatrix, rotXMatrix));
 
+        // compile matrices together
         return Matrix4f.multiply(translationMatrix, rotationMatrix);
     }
 

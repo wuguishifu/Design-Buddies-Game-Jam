@@ -26,6 +26,20 @@ public class GameObject {
     }
 
     /**
+     * creates the mesh
+     */
+    public void createMesh() {
+        mesh.create();
+    }
+
+    /**
+     * releases the game object
+     */
+    public void destroy() {
+        mesh.destroy();
+    }
+
+    /**
      * updates the object
      */
     public void update() {

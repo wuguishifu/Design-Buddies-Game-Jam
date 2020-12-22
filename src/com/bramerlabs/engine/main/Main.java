@@ -3,10 +3,9 @@ package com.bramerlabs.engine.main;
 import com.bramerlabs.engine.graphics.*;
 import com.bramerlabs.engine.io.window.Input;
 import com.bramerlabs.engine.io.window.Window;
-import com.bramerlabs.engine.math.Vector2f;
 import com.bramerlabs.engine.math.Vector3f;
 import com.bramerlabs.engine.objects.Camera;
-import com.bramerlabs.engine.objects.GameObject;
+import com.bramerlabs.engine.objects.Cube;
 import org.lwjgl.glfw.GLFW;
 
 public class Main implements Runnable {
@@ -19,69 +18,7 @@ public class Main implements Runnable {
 
     private Input input = new Input();
 
-    public Mesh mesh = new Mesh(new Vertex[] {
-            //Back face
-            new Vertex(new Vector3f(-0.5f,  0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f( 0.5f, -0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f( 0.5f,  0.5f, -0.5f), new Vector2f(1.0f, 0.0f)),
-
-            //Front face
-            new Vertex(new Vector3f(-0.5f,  0.5f,  0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-0.5f, -0.5f,  0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f( 0.5f, -0.5f,  0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f( 0.5f,  0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
-
-            //Right face
-            new Vertex(new Vector3f( 0.5f,  0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f( 0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f( 0.5f, -0.5f,  0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f( 0.5f,  0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
-
-            //Left face
-            new Vertex(new Vector3f(-0.5f,  0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f(-0.5f, -0.5f,  0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f(-0.5f,  0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
-
-            //Top face
-            new Vertex(new Vector3f(-0.5f,  0.5f,  0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-0.5f,  0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f( 0.5f,  0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f( 0.5f,  0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
-
-            //Bottom face
-            new Vertex(new Vector3f(-0.5f, -0.5f,  0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f( 0.5f, -0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f( 0.5f, -0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
-    }, new int[] {
-            //Back face
-            0, 1, 3,
-            3, 1, 2,
-
-            //Front face
-            4, 5, 7,
-            7, 5, 6,
-
-            //Right face
-            8, 9, 11,
-            11, 9, 10,
-
-            //Left face
-            12, 13, 15,
-            15, 13, 14,
-
-            //Top face
-            16, 17, 19,
-            19, 17, 18,
-
-            //Bottom face
-            20, 21, 23,
-            23, 21, 22
-    }, new Material("/textures/go-team.png"));
-
-    public GameObject object = new GameObject(mesh, new Vector3f(0, 0, 0f), new Vector3f(0, 0, 0), new Vector3f(1f, 1f, 1f));
+    public Cube cube = new Cube(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1f, 1f, 1f), "/textures/3ttest.png");
 
     public Camera camera = new Camera(new Vector3f(0, 0, 1), new Vector3f(0, 0, 0), input);
 
@@ -105,7 +42,7 @@ public class Main implements Runnable {
         window.create();
 
         shader = new Shader("/shaders/mainVertex.glsl", "/shaders/mainFragment.glsl");
-        mesh.create();
+        cube.createMesh();
         renderer = new Renderer(window, shader);
 
         shader.create();
@@ -113,12 +50,12 @@ public class Main implements Runnable {
 
     private void close() {
         window.destroy();
-        mesh.destroy();
+        cube.destroy();
         shader.destroy();
     }
 
     public void start() {
-        Thread main = new Thread(this, "Terra Nova 0.3");
+        Thread main = new Thread(this, "Game Buddies Game Jam!");
         main.start();
     }
 
@@ -128,7 +65,7 @@ public class Main implements Runnable {
     }
 
     private void render() {
-        renderer.renderMesh(object, camera);
+        renderer.renderMesh(cube, camera);
         window.swapBuffers();
     }
 }
