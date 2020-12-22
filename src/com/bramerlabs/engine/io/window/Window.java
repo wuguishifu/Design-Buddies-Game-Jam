@@ -5,9 +5,12 @@ import com.bramerlabs.engine.math.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL46;
 
 import java.awt.*;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class Window {
 
@@ -125,9 +128,12 @@ public class Window {
         // make an OpenGL window - must be done before running any OpenGL methods
         GL.createCapabilities();
 
+        // only renders objects that are facing the camera
+        GL11.glEnable(GL_CULL_FACE);
+
         // set the clear color
         GL46.glClearColor(bgc.getX(), bgc.getY(), bgc.getZ(), 1);
-        GL46.glClear(GL46.GL_COLOR_BUFFER_BIT);
+        GL46.glClear(GL46.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
         // set the viewport
         GL46.glViewport(0, 0, defaultWidth, defaultHeight);

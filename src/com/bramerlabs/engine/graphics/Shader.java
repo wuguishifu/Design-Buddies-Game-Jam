@@ -224,4 +224,12 @@ public class Shader {
     public int getNumAttribs() {
         return this.numAttribs;
     }
+
+    /**
+     * sets the number of attributes
+     * @param numAttribs - the number of attributes
+     */
+    public void setNumAttribs(int numAttribs) {
+        this.numAttribs = numAttribs;
+    }
 }

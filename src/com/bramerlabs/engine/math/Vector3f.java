@@ -140,41 +140,41 @@ public class Vector3f {
 
     /**
      * element-wise multiplication of two vectors
-     * @param u - vector 1
-     * @param v - vector 2
+     * @param vector1 - vector 1
+     * @param vector2 - vector 2
      * @return - a new vector representing the element-wise multiplication of u, v
      */
-    public static Vector3f multiply(Vector3f u, Vector3f v) {
-        return new Vector3f(u.x * v.x, u.y * v.y, u.z * v.z);
+    public static Vector3f multiply(Vector3f vector1, Vector3f vector2) {
+        return new Vector3f(vector1.getX() * vector2.getX(), vector1.getY() * vector2.getY(), vector1.getZ() * vector2.getZ());
     }
 
     /**
      * element-wise division of two vectors
-     * @param u - vector 1
-     * @param v - vector 2
+     * @param vector1 - vector 1
+     * @param vector2 - vector 2
      * @return - a new vector representing the element-wise division of u, v
      */
-    public static Vector3f divide(Vector3f u, Vector3f v) {
-        return new Vector3f(u.x / v.x, u.y / v.y, u.z / v.z);
+    public static Vector3f divide(Vector3f vector1, Vector3f vector2) {
+        return new Vector3f(vector1.getX() / vector2.getX(), vector1.getY() / vector2.getY(), vector1.getZ() / vector2.getZ());
     }
 
     /**
      * computes the dot product of two vectors
-     * @param u - vector 1
-     * @param v - vector 2
+     * @param vector1 - vector 1
+     * @param vector2 - vector 2
      * @return - the dot product (u dot v)
      */
-    public static float dotProduct(Vector3f u, Vector3f v) {
-        return u.x * v.x + u.y * v.y + u.z * v.z;
+    public static float dot(Vector3f vector1, Vector3f vector2) {
+        return vector1.getX() * vector2.getX() + vector1.getY() * vector2.getY() + vector1.getZ() * vector2.getZ();
     }
 
     /**
      * determines the length of a vector
-     * @param v - the vector
+     * @param vector - the vector
      * @return - the length
      */
-    public static float length(Vector3f v) {
-        return (float) Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+    public static float length(Vector3f vector) {
+        return (float) Math.sqrt(vector.getX() * vector.getX() + vector.getY() * vector.getY() + vector.getZ() * vector.getZ());
     }
 
     /**
