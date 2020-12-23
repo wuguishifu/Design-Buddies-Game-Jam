@@ -18,9 +18,10 @@ public class Main implements Runnable {
 
     private Input input = new Input();
 
-    public Cube cube = new Cube(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1f, 1f, 1f), "/textures/3ttest.png");
+    public Cube cube = new Cube(new Vector3f(0, 0, 0), new Vector3f(0, 45, 0), new Vector3f(1f, 1f, 1f), "/textures/3ttest.png");
+    public Cube cube1 = new Cube(new Vector3f(-5f, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1f, 1f, 1f), "/textures/test.png");
 
-    public Camera camera = new Camera(new Vector3f(0, 0, 1), new Vector3f(0, 0, 0), input);
+    public Camera camera = new Camera(new Vector3f(0, 0, 2), new Vector3f(0, 0, 0), input);
 
     public static void main(String[] args) {
         new Main().start();
@@ -43,6 +44,7 @@ public class Main implements Runnable {
 
         shader = new Shader("/shaders/mainVertex.glsl", "/shaders/mainFragment.glsl");
         cube.createMesh();
+        cube1.createMesh();
         renderer = new Renderer(window, shader);
 
         shader.create();
@@ -51,6 +53,7 @@ public class Main implements Runnable {
     private void close() {
         window.destroy();
         cube.destroy();
+        cube1.destroy();
         shader.destroy();
     }
 
@@ -66,6 +69,7 @@ public class Main implements Runnable {
 
     private void render() {
         renderer.renderMesh(cube, camera);
+        renderer.renderMesh(cube1, camera);
         window.swapBuffers();
     }
 }
