@@ -131,6 +131,11 @@ public class Window {
         // only renders objects that are facing the camera
         GL11.glEnable(GL_CULL_FACE);
 
+        // render a vertex if and only if it appears in front of another vertex
+        GL11.glEnable(GL_DEPTH_TEST);
+        GL11.glClear(GL_DEPTH_BUFFER_BIT);
+        GL11.glDepthFunc(GL_LESS);
+
         // set the clear color
         GL46.glClearColor(bgc.getX(), bgc.getY(), bgc.getZ(), 1);
         GL46.glClear(GL46.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -198,12 +203,12 @@ public class Window {
                         GLFW.GLFW_REFRESH_RATE
                 );
             }
-            GL46.glClear(GL46.GL_COLOR_BUFFER_BIT);
+            GL46.glClear(GL46.GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }
 
         // clear the screen
         GL46.glClearColor(bgc.getX(), bgc.getY(), bgc.getZ(), 1);
-        GL46.glClear(GL46.GL_COLOR_BUFFER_BIT);
+        GL46.glClear(GL46.GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // poll GLFW for callbacks
         GLFW.glfwPollEvents();
