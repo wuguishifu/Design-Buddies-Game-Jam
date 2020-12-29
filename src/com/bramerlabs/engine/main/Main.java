@@ -118,7 +118,7 @@ public class Main implements Runnable {
      */
     private void update() {
         window.update();
-        camera.update();
+        camera.update(cubes.get(3));
     }
 
     /**
