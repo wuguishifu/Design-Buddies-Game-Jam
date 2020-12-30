@@ -5,29 +5,48 @@ import com.bramerlabs.engine.io.window.Input;
 import com.bramerlabs.engine.io.window.Window;
 import com.bramerlabs.engine.math.Vector3f;
 import com.bramerlabs.engine.objects.Camera;
-import com.bramerlabs.engine.objects.Cube;
+import com.bramerlabs.engine.objects.GameObject;
+import com.bramerlabs.engine.objects.Hitbox;
+import com.bramerlabs.engine.objects.game_objects.Cube;
+import com.bramerlabs.engine.objects.game_objects.Player;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 
 public class Main implements Runnable {
 
+    // the main window of the game
     private Window window;
 
+    // the shader used to paint textures
     private Shader shader;
 
+    // used to render objects
     private Renderer renderer;
 
+    // used to handle inputs
     private Input input = new Input();
 
+    // test game objects
     private ArrayList<Cube> cubes = new ArrayList<>();
 
+    // test player
+    private Player player;
+
+    // the camera
     public Camera camera = new Camera(new Vector3f(0, 0, 2), new Vector3f(0, 0, 0), input);
 
+    /**
+     * main method
+     * @param args - args
+     */
     public static void main(String[] args) {
         new Main().start();
     }
 
+    /**
+     * runs the game
+     */
     public void run() {
         init();
         while (!window.shouldClose()) {
@@ -49,35 +68,17 @@ public class Main implements Runnable {
         // create game objects here
         String dPath = "/textures/3ttest.png";
         cubes.add(new Cube(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), "/textures/3ttest.png"));
-        cubes.add(new Cube(new Vector3f(2, 0, 0), dPath));
         cubes.add(new Cube(new Vector3f(4, 0, 0), dPath));
-        cubes.add(new Cube(new Vector3f(0, 2, 0), dPath));
-        cubes.add(new Cube(new Vector3f(2, 2, 0), dPath));
-        cubes.add(new Cube(new Vector3f(4, 2, 0), dPath));
-        cubes.add(new Cube(new Vector3f(0, 4, 0), dPath));
-        cubes.add(new Cube(new Vector3f(2, 4, 0), dPath));
-        cubes.add(new Cube(new Vector3f(4, 4, 0), dPath));
-        cubes.add(new Cube(new Vector3f(0, 0, 2), dPath));
-        cubes.add(new Cube(new Vector3f(2, 0, 2), dPath));
-        cubes.add(new Cube(new Vector3f(4, 0, 2), dPath));
-        cubes.add(new Cube(new Vector3f(0, 2, 2), dPath));
-        cubes.add(new Cube(new Vector3f(2, 2, 2), dPath));
-        cubes.add(new Cube(new Vector3f(4, 2, 2), dPath));
-        cubes.add(new Cube(new Vector3f(0, 4, 2), dPath));
-        cubes.add(new Cube(new Vector3f(2, 4, 2), dPath));
-        cubes.add(new Cube(new Vector3f(4, 4, 2), dPath));
-        cubes.add(new Cube(new Vector3f(0, 0, 4), dPath));
-        cubes.add(new Cube(new Vector3f(2, 0, 4), dPath));
-        cubes.add(new Cube(new Vector3f(4, 0, 4), dPath));
-        cubes.add(new Cube(new Vector3f(0, 2, 4), dPath));
-        cubes.add(new Cube(new Vector3f(2, 2, 4), dPath));
-        cubes.add(new Cube(new Vector3f(4, 2, 4), dPath));
-        cubes.add(new Cube(new Vector3f(0, 4, 4), dPath));
-        cubes.add(new Cube(new Vector3f(2, 4, 4), dPath));
-        cubes.add(new Cube(new Vector3f(4, 4, 4), dPath));
+        cubes.add(new Cube(new Vector3f(8, 0, 0), dPath));
         for (Cube cube : cubes) {
             cube.createMesh();
         }
+
+        // creating the player
+        player = new Player(new Vector3f(0, 0, 4), dPath);
+        player.addInput(input);
+        player.createMesh();
+        player.addCamera(camera);
 
         // create the shader
         shader = new Shader("/shaders/mainVertex.glsl", "/shaders/mainFragment.glsl");
@@ -101,6 +102,9 @@ public class Main implements Runnable {
             cube.destroy();
         }
 
+        // release the player
+        player.destroy();
+
         // release the shader
         shader.destroy();
     }
@@ -117,8 +121,11 @@ public class Main implements Runnable {
      * update the window and game objects
      */
     private void update() {
+        ArrayList<GameObject> gameObjects = new ArrayList<>(cubes);
+
         window.update();
-        camera.update(cubes.get(3));
+        player.update(gameObjects);
+        camera.update(player);
     }
 
     /**
@@ -129,6 +136,8 @@ public class Main implements Runnable {
         for (Cube cube : cubes) {
             renderer.renderMesh(cube, camera);
         }
+
+        renderer.renderMesh(player, camera);
 
         // must be called at the end
         window.swapBuffers();
