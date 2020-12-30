@@ -17,10 +17,10 @@ public class Camera {
     private final static float rotateSpeed = 0.02f * 360;
 
     // arcball camera variables
-    private float distance = 2.0f;
+    private float distance = 5.0f;
     private float angle = 0.0f;
     private float horizontalDistance = 0, verticalDistance = 0;
-    private float verticalAngle = 0, horizontalAngle = 0;
+    private float verticalAngle = -45, horizontalAngle = 0;
 
     // the position of the mouse
     private double oldMouseX = 0, oldMouseY = 0, newMouseX, newMouseY;
@@ -110,7 +110,6 @@ public class Camera {
             distance = 0.1f;
         }
 
-
         // get the vertical and horizontal distances
         this.horizontalDistance = (float) (distance * Math.cos(Math.toRadians(verticalAngle))); // using formula h = r*cos(theta_x)
         this.verticalDistance = (float) (distance * Math.sin(Math.toRadians(verticalAngle))); // using formula v = r*sin(theta_x)
@@ -141,5 +140,21 @@ public class Camera {
      */
     public Vector3f getRotation() {
         return rotation;
+    }
+
+    /**
+     * getter method
+     * @return - the vertical angle
+     */
+    public float getVerticalAngle() {
+        return this.verticalAngle;
+    }
+
+    /**
+     * getter method
+     * @return - the horizontal angle
+     */
+    public float getHorizontalAngle() {
+        return this.horizontalAngle;
     }
 }

@@ -30,6 +30,16 @@ public class Vector3f {
     }
 
     /**
+     * constructor for a specified vector
+     * @param v - the other vector
+     */
+    public Vector3f(Vector3f v) {
+        this.x = v.x;
+        this.y = v.y;
+        this.z = v.z;
+    }
+
+    /**
      * creates an identity vector in the e1 direction
      * @return - the identity vector
      */
@@ -146,6 +156,16 @@ public class Vector3f {
      */
     public static Vector3f multiply(Vector3f vector1, Vector3f vector2) {
         return new Vector3f(vector1.getX() * vector2.getX(), vector1.getY() * vector2.getY(), vector1.getZ() * vector2.getZ());
+    }
+
+    /**
+     * scales a vector
+     * @param vector1 - the vector
+     * @param scaleFactor - the scale factor
+     * @return - a new vector representing the scalar multiplication of the vector and float
+     */
+    public static Vector3f scale(Vector3f vector1, float scaleFactor) {
+        return new Vector3f(vector1.getX() * scaleFactor, vector1.getY() * scaleFactor, vector1.getZ() * scaleFactor);
     }
 
     /**
