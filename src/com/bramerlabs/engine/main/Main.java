@@ -10,6 +10,7 @@ import com.bramerlabs.engine.objects.Hitbox;
 import com.bramerlabs.engine.objects.game_objects.Cube;
 import com.bramerlabs.engine.objects.game_objects.Player;
 import org.lwjgl.glfw.GLFW;
+import org.lwjglx.util.vector.Vector4f;
 
 import java.util.ArrayList;
 
@@ -67,15 +68,16 @@ public class Main implements Runnable {
 
         // create game objects here
         String dPath = "/textures/3ttest.png";
-        cubes.add(new Cube(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), "/textures/3ttest.png"));
-        cubes.add(new Cube(new Vector3f(4, 0, 0), dPath));
-        cubes.add(new Cube(new Vector3f(8, 0, 0), dPath));
+        cubes.add(new Cube(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(4, 1, 4), "/textures/3ttest.png"));
+        cubes.add(new Cube(new Vector3f(0, -1, 0), new Vector3f(0, 0, 0), new Vector3f(8, 1, 8), "/textures/3ttest.png"));
+//        cubes.add(new Cube(new Vector3f(4, 0, 0), dPath));
+//        cubes.add(new Cube(new Vector3f(8, 0, 0), dPath));
         for (Cube cube : cubes) {
             cube.createMesh();
         }
 
         // creating the player
-        player = new Player(new Vector3f(0, 0, 4), dPath);
+        player = new Player(new Vector3f(0, 2, 0), dPath);
         player.addInput(input);
         player.createMesh();
         player.addCamera(camera);
