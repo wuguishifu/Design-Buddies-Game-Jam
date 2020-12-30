@@ -151,5 +151,4 @@ public class Player extends Cube {
         // move the player
         this.setPosition(Vector3f.add(getPosition(), new Vector3f(dx, dy, dz)));
     }
-
 }

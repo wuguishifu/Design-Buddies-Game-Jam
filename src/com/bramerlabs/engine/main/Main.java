@@ -70,6 +70,7 @@ public class Main implements Runnable {
         String dPath = "/textures/3ttest.png";
         cubes.add(new Cube(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(4, 1, 4), "/textures/3ttest.png"));
         cubes.add(new Cube(new Vector3f(0, -1, 0), new Vector3f(0, 0, 0), new Vector3f(8, 1, 8), "/textures/3ttest.png"));
+        cubes.add(new Cube(new Vector3f(0, 1, 1), new Vector3f(0, 90, 0), new Vector3f(1, 1, 1), "/textures/3ttest.png"));
 //        cubes.add(new Cube(new Vector3f(4, 0, 0), dPath));
 //        cubes.add(new Cube(new Vector3f(8, 0, 0), dPath));
         for (Cube cube : cubes) {
@@ -128,6 +129,13 @@ public class Main implements Runnable {
         window.update();
         player.update(gameObjects);
         camera.update(player);
+
+        System.out.println(player.getPosition());
+
+        // if the player goes too low close the window
+        if (player.getPosition().getY() < -50) {
+            window.close();
+        }
     }
 
     /**
