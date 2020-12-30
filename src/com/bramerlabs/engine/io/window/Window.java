@@ -237,6 +237,10 @@ public class Window {
         return GLFW.glfwWindowShouldClose(windowHandle);
     }
 
+    public void close() {
+        GLFW.glfwSetWindowShouldClose(windowHandle, true);
+    }
+
     /**
      * release the window
      */

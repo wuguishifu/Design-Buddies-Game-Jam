@@ -351,4 +351,9 @@ public class Vector3f {
     public int hashCode() {
         return Objects.hash(x, y, z);
     }
+
+    @Override
+    public String toString() {
+        return "(" + this.x + ", " + this.y + ", " + this.z + ")";
+    }
 }

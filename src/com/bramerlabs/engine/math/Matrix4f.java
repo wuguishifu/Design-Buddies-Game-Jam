@@ -112,7 +112,7 @@ public class Matrix4f {
         Matrix4f scaleMatrix = Matrix4f.scale(scale);
 
         // combine all matrices into one transformation matrix
-        return Matrix4f.multiply(translationMatrix, Matrix4f.multiply(rotationMatrix, scaleMatrix));
+        return Matrix4f.multiply(Matrix4f.multiply(scaleMatrix, rotationMatrix), translationMatrix);
     }
 
     /**

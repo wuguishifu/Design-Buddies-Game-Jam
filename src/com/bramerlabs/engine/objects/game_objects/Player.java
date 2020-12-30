@@ -19,6 +19,15 @@ public class Player extends Cube {
 
     // the movement speed of the player
     private static final float moveSpeed = 0.1f;
+    private static final float jumpSpeed = 0.2f;
+
+    // physics values
+    private static final float gravitationalAcceleration = -0.01f;
+    private float dy = 0;
+    private boolean onGround = false;
+    // coyote time for jumping
+    private static final int coyoteTime = 30; // 30 frames of coyote time
+    private int currentCoyote = 0;
 
     /**
      * constructor for specified existence
@@ -57,7 +66,7 @@ public class Player extends Cube {
     }
 
     /**
-     * updates this player
+     * updates this player position
      */
     public void update(ArrayList<GameObject> gameObjects) {
 
@@ -73,7 +82,6 @@ public class Player extends Cube {
         float oldZ = move.getZ();
         // create dx and dz movement based on angular rotation of the movement vector corresponding to the horizontal angle of the camera
         float dx = (float) (oldX * Math.cos(theta) - oldZ * Math.sin(theta));
-        float dy;
         float dz = (float) (oldX * Math.sin(theta) + oldZ * Math.cos(theta));
 
         // create new temp position based on the key inputs
@@ -86,17 +94,39 @@ public class Player extends Cube {
         if (input.isKeyDown(GLFW.GLFW_KEY_A)) dPos = Vector3f.add(dPos, new Vector3f(dz, 0, -dx));
         if (input.isKeyDown(GLFW.GLFW_KEY_D)) dPos = Vector3f.add(dPos, new Vector3f(-dz, 0, dx));
         // up and down
-        if (input.isKeyDown(GLFW.GLFW_KEY_SPACE)) dPos = Vector3f.add(dPos, new Vector3f(0, moveSpeed, 0));
-        if (input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) dPos = Vector3f.add(dPos, new Vector3f(0, -moveSpeed, 0));
+        if (input.isKeyDown(GLFW.GLFW_KEY_SPACE) && onGround) {
+            dPos = Vector3f.add(dPos, new Vector3f(0, jumpSpeed, 0));
+            onGround = false;
+        }
+
+        // check to see if the player is on a ground surface
+        // create the current hitbox
+        Vector3f curMin = Vector3f.subtract(this.getPosition(), Vector3f.scale(this.getScale(), 0.5f));
+        Vector3f curMax = Vector3f.add(this.getPosition(), Vector3f.scale(this.getScale(), 0.5f));
+        Hitbox groundCheck = new Hitbox(curMin.getX(), curMax.getX(), curMin.getY() - 0.1f, curMax.getY(), curMin.getZ(), curMax.getZ());
+        for (GameObject o : gameObjects) {
+            if (!groundCheck.intersects(o.getHitbox())) {
+                if (currentCoyote >= coyoteTime) {
+                    onGround = false;
+                    currentCoyote = 0;
+                }
+                currentCoyote ++;
+            }
+        }
+
+        // change dy based on the effect of gravity
+        if (!onGround) {
+            dy += gravitationalAcceleration;
+        }
+        dPos = Vector3f.add(dPos, new Vector3f(0, dy, 0));
 
         // check collision by attempting to move the player
         // create dx, dy, dz components
         dx = dPos.getX();
-        dy = dPos.getY();
         dz = dPos.getZ();
+        dy = dPos.getY();
+
         // find the min/max x, y, z
-        Vector3f curMin = Vector3f.subtract(this.getPosition(), Vector3f.scale(this.getScale(), 0.5f));
-        Vector3f curMax = Vector3f.add(this.getPosition(), Vector3f.scale(this.getScale(), 0.5f));
         Vector3f newPos = Vector3f.add(this.getPosition(), dPos);
         Vector3f newMin = Vector3f.subtract(newPos, Vector3f.scale(this.getScale(), 0.5f));
         Vector3f newMax = Vector3f.add(newPos, Vector3f.scale(this.getScale(), 0.5f));
@@ -104,20 +134,21 @@ public class Player extends Cube {
         Hitbox hdx = new Hitbox(newMin.getX(), newMax.getX(), curMin.getY(), curMax.getY(), curMin.getZ(), curMax.getZ());
         Hitbox hdy = new Hitbox(curMin.getX(), curMax.getX(), newMin.getY(), newMax.getY(), curMin.getZ(), curMax.getZ());
         Hitbox hdz = new Hitbox(curMin.getX(), curMax.getX(), curMin.getY(), curMax.getY(), newMin.getZ(), newMax.getZ());
-
+        // check the hitboxes of other game objects
         for (GameObject o : gameObjects) {
             if (hdx.intersects(o.getHitbox())) {
                 dx = 0;
             }
             if (hdy.intersects(o.getHitbox())) {
                 dy = 0;
+                onGround = true;
             }
             if (hdz.intersects(o.getHitbox())) {
                 dz = 0;
             }
         }
 
+        // move the player
         this.setPosition(Vector3f.add(getPosition(), new Vector3f(dx, dy, dz)));
     }
-
 }
