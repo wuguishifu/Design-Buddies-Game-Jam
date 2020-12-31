@@ -6,11 +6,9 @@ import com.bramerlabs.engine.io.window.Window;
 import com.bramerlabs.engine.math.Vector3f;
 import com.bramerlabs.engine.objects.Camera;
 import com.bramerlabs.engine.objects.GameObject;
-import com.bramerlabs.engine.objects.Hitbox;
 import com.bramerlabs.engine.objects.game_objects.Cube;
 import com.bramerlabs.engine.objects.game_objects.Player;
 import org.lwjgl.glfw.GLFW;
-import org.lwjglx.util.vector.Vector4f;
 
 import java.util.ArrayList;
 
@@ -70,9 +68,9 @@ public class Main implements Runnable {
         String dPath = "/textures/3ttest.png";
         cubes.add(new Cube(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(4, 1, 4), "/textures/3ttest.png"));
         cubes.add(new Cube(new Vector3f(0, -1, 0), new Vector3f(0, 0, 0), new Vector3f(8, 1, 8), "/textures/3ttest.png"));
-        cubes.add(new Cube(new Vector3f(0, 1, 1), new Vector3f(0, 90, 0), new Vector3f(1, 1, 1), "/textures/3ttest.png"));
-//        cubes.add(new Cube(new Vector3f(4, 0, 0), dPath));
-//        cubes.add(new Cube(new Vector3f(8, 0, 0), dPath));
+        for (int i = 1; i < 16; i++) {
+            cubes.add(new Cube(new Vector3f(4*i, 0, 0), dPath)); // test parkour lol
+        }
         for (Cube cube : cubes) {
             cube.createMesh();
         }
